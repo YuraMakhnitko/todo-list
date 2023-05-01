@@ -46,7 +46,8 @@
   }
 }
 
-.todo__items {
+.todo__items-active,
+.todo__items-completed {
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -110,6 +111,7 @@
   padding: 8px 15px;
   width: 100%;
   text-align: left;
+  font-size: 16px;
 }
 
 .todo__input-box {

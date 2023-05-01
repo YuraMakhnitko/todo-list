@@ -10,6 +10,7 @@ interface Todo {
   index: number;
   onClickRemove(num: number, compleated: boolean): void;
   onClickComplete(ind: number, compleated: boolean): void;
+  onDragStart(event: React.DragEvent<HTMLDivElement>, data: Todo): void;
 }
 
 const OneTodo = ({
@@ -18,7 +19,15 @@ const OneTodo = ({
   onClickRemove,
   onClickComplete,
   index,
+  onDragStart,
 }: Todo) => {
+  const data = {
+    todoText,
+    index,
+    completed,
+  } as Todo;
+  // console.log(data, "data");
+
   const todoStyleFade: string = "todo__item-fade";
   const todoStyleAppear: string = "todo__item";
   const todoStyleRemove: string = "todo__item-remove";
@@ -29,31 +38,19 @@ const OneTodo = ({
     setTimeout(() => {
       onClickRemove(index, completed);
     }, 200);
-    // onClickRemove(index, completed);
-    console.log("hey");
   };
 
   const completeTodoHandler = (): void => {
     onClickComplete(index, !completed);
-    setTimeout(() => {
-      // onClickComplete(index, !completed);
-      // if (todoAnim) {
-      //   setTodoAnim(!todoAnim);
-      // }
-    }, 200);
-    // if (index < 2) {
-    //   setTimeout(() => setTodoAnim(todoStyleAppear), 200);
-    // }
-    // setTimeout(() => setTodoAnim(todoStyleAppear), 5);
-    // if (completed) {
-    // }
-    // setTimeout(() => setTodoAnim(todoStyleAppear), 200);
-    // setTodoAnim(todoStyleAppear);
-    // onClickComplete(index, !completed);
+    // setTimeout(() => {}, 200);
   };
 
   return (
-    <div className={todoAnim ? todoStyleRemove : todoStyleAppear}>
+    <div
+      className={todoAnim ? todoStyleRemove : todoStyleAppear}
+      draggable={true}
+      onDragStart={(event) => onDragStart(event, data)}
+    >
       <p className="todo__number">{index + 1}</p>
       <p className="todo__description">{todoText}</p>
       <div className="todo__button-box">

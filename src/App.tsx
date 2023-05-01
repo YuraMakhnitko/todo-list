@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import "./App.css";
 
@@ -9,14 +9,21 @@ interface Todo {
   todoText: string;
   completed: boolean;
   index: number;
+  onDragStart(): void;
   onClickAddTodo(value: string): void;
-  onClickRemove(num: number, compleated: boolean): void;
-  onClickComplete(ind: number, compleated: boolean): void;
+  onClickRemove(num: number, completed: boolean): void;
+  onClickComplete(ind: number, completed: boolean): void;
 }
 
 function App() {
   const [listTodo, setListTodo] = useState<Todo[]>([]);
   const [completedList, setCompletedList] = useState<Todo[]>([]);
+
+  const completedItems = useRef<HTMLDivElement>(null);
+  const arctiveItems = useRef<HTMLDivElement>(null);
+  const [transferTodo, setTransferTodo] = useState<Todo>();
+  const [field, setField] = useState<boolean>(false);
+  // console.log(transferTodo, "aAAAAAAAAAAAAAA");
 
   const handleAddTodo = (todoValue: string) => {
     const todoItem = {
@@ -54,6 +61,7 @@ function App() {
       if (findCompletedTodo) {
         findCompletedTodo.completed = isCompleted;
         setCompletedList([...completedList, findCompletedTodo]);
+
         setListTodo(
           listTodo.filter((todo) => {
             return !todo.completed;
@@ -77,11 +85,60 @@ function App() {
     }
   };
 
+  const onDragStartHandler = (
+    event: React.DragEvent<HTMLDivElement>,
+    data: Todo
+  ) => {
+    setField(false);
+    const dataString = JSON.stringify(data);
+    event.dataTransfer.setData("text", dataString);
+    if (data.completed) {
+      setField(data.completed);
+    }
+    // setField(!data.completed);
+    setTransferTodo(data);
+  };
+
+  const dropHandler = (event: React.DragEvent<HTMLDivElement>): void => {
+    event.preventDefault();
+    const data = JSON.parse(event.dataTransfer.getData("text")) as Todo;
+    handleCompeteTodo(data.index, !data.completed);
+  };
+
+  const allowDrop = (event: React.DragEvent<HTMLDivElement>): void => {
+    // if (!field) {
+    //   return;
+    // }
+    // event.preventDefault();
+    // if (transferTodo?.completed !== field) {
+    //   event.preventDefault();
+    //   return;
+    // }
+    if (transferTodo?.completed) {
+      return;
+    }
+    event.preventDefault();
+    // event.preventDefault();
+  };
+
+  // const allowDropCompleted = (event: React.DragEvent<HTMLDivElement>): void => {
+  //   if (transferTodo?.completed) {
+  //     return;
+  //   }
+  //   event.preventDefault();
+  // };
+
   return (
     <div className="App">
       <div className="todo">
         <h2 className="todo__title">List of TODOs</h2>
-        <div className="todo__items">
+        <div
+          className="todo__items-active"
+          ref={arctiveItems}
+          onDrop={dropHandler}
+          // onDragOver={()=>allowDrop(arctiveItems)}
+          onDragOver={allowDrop}
+        >
           <AddTodo onClickAddTodo={handleAddTodo} />
           {listTodo.length > 0 && (
             <>
@@ -96,6 +153,7 @@ function App() {
                     {...todo}
                     key={index}
                     index={index}
+                    onDragStart={onDragStartHandler}
                     onClickRemove={handleRemoveTodo}
                     onClickComplete={handleCompeteTodo}
                   />
@@ -107,7 +165,12 @@ function App() {
             <h4 className="todo__sub-title">Your list of TODOs is empty!</h4>
           )}
         </div>
-        <div className="todo__items">
+        <div
+          className="todo__items-completed"
+          onDrop={dropHandler}
+          onDragOver={allowDrop}
+          ref={completedItems}
+        >
           {completedList.length > 0 && (
             <>
               <h4 className="todo__sub-title">
@@ -123,6 +186,7 @@ function App() {
                       {...todo}
                       key={index}
                       index={index}
+                      onDragStart={onDragStartHandler}
                       onClickRemove={handleRemoveTodo}
                       onClickComplete={handleCompeteTodo}
                     />
