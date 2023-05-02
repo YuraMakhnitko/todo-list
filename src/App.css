@@ -1,5 +1,12 @@
 .App {
+  padding-top: 15px;
   text-align: center;
+  background: rgb(15, 32, 120);
+  background: radial-gradient(
+    circle,
+    rgba(15, 32, 120, 1) 0%,
+    rgba(33, 1, 8, 1) 100%
+  );
   /* transition: 0.3s ease 0s; */
 }
 
@@ -12,12 +19,12 @@
   font-size: calc(10px + 2vmin);
   color: white;
   padding: 0px 15px;
-  background: rgb(15, 32, 120);
+  /* background: rgb(15, 32, 120);
   background: radial-gradient(
     circle,
     rgba(15, 32, 120, 1) 0%,
     rgba(33, 1, 8, 1) 100%
-  );
+  ); */
 
   animation: backTodo 5s ease;
   animation-iteration-count: infinite;
