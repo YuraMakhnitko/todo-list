@@ -4,7 +4,7 @@
 }
 
 .todo {
-  background-color: #282c34;
+  /* background-color: #282c34; */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -12,6 +12,41 @@
   font-size: calc(10px + 2vmin);
   color: white;
   padding: 0px 15px;
+  /* background: rgb(2, 0, 36);
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(9, 9, 121, 1) 35%,
+    rgba(1, 30, 36, 1) 100%
+  ); */
+
+  background: rgb(15, 32, 120);
+  background: radial-gradient(
+    circle,
+    rgba(15, 32, 120, 1) 0%,
+    rgba(33, 1, 8, 1) 100%
+  );
+
+  /* animation: backTodo 5s ease; */
+  animation-iteration-count: infinite;
+}
+@keyframes backTodo {
+  from {
+    background: linear-gradient(
+      90deg,
+      rgba(2, 0, 36, 1) 0%,
+      rgba(9, 9, 121, 1) 35%,
+      rgba(1, 30, 36, 1) 100%
+    );
+  }
+  to {
+    background: linear-gradient(
+      180deg,
+      rgba(2, 0, 36, 1) 0%,
+      rgba(9, 9, 121, 1) 35%,
+      rgba(1, 30, 36, 1) 100%
+    );
+  }
 }
 
 .todo__title {
@@ -91,15 +126,6 @@
   animation: item-remove 0.3s ease;
 }
 
-/* @keyframes item {
-  from {
-    transform: scale(0.01);
-  }
-  to {
-    transform: scale(1);
-  }
-} */
-
 .todo__number {
   margin: 0;
   padding: 8px 15px;
@@ -121,17 +147,23 @@
   overflow: hidden;
   background-color: rgba(8, 80, 100, 0.5);
   border: 1px solid rgba(97, 218, 251, 0.1);
-  animation: input-box 0.6s ease-in;
+  animation: input-box 0.3s ease;
+  animation-fill-mode: forwards;
   width: 100%;
   max-width: 700px;
+  opacity: 0;
+  animation-delay: 0.5s;
+  /* overflow: hidden; */
   /* animation-delay: 0.2s; */
   /* transform: translate(200%, 0%); */
 }
 @keyframes input-box {
   from {
-    transform: translate(200%, 0%);
+    opacity: 0;
+    transform: translate(0%, 50%);
   }
   to {
+    opacity: 1;
     transform: translate(0%, 0%);
   }
 }

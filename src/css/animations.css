@@ -30,3 +30,28 @@
     /* transform: translate(200%, 0); */
   }
 }
+
+.anim-title__box {
+  display: flex;
+  /* animation: title-letters 3s ease-in; */
+}
+
+.anim-title__letter {
+  font-size: 36px;
+  color: #61dafb;
+  text-transform: uppercase;
+  opacity: 0;
+  /* animation: title-letters 3s ease; */
+  /* animation-delay: 30s; */
+}
+
+@keyframes title-letters {
+  from {
+    opacity: 0;
+    transform: translate(1000%, 0%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0%, 0%);
+  }
+}

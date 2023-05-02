@@ -7,6 +7,7 @@ import "./App.css";
 
 import OneTodo from "./compontets/OneTodo";
 import AddTodo from "./compontets/AddToto";
+import { AnimatedTitle } from "./compontets/animations/AnimatedTitle";
 
 interface Todo {
   todoText: string;
@@ -112,7 +113,8 @@ function App() {
   return (
     <div className="App">
       <div className="todo">
-        <h2 className="todo__title">List of TODOs</h2>
+        {/* <h2 className="todo__title">List of TODOs</h2> */}
+        <AnimatedTitle />
         <AddTodo onClickAddTodo={handleAddTodo} />
 
         <div
@@ -150,7 +152,7 @@ function App() {
           onDrop={dropHandler}
           onDragOver={transferTodo?.completed ? undefined : allowDrop}
         >
-          {completedList.length === 0 && (
+          {completedList.length === 0 && listTodo.length > 0 && (
             <h4 className="todo__sub-title">
               Drag TOTO here to mark it as Completed
             </h4>
