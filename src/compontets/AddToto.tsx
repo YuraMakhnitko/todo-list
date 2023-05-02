@@ -1,15 +1,20 @@
 import { useState } from "react";
 import { MdAssignmentAdd } from "react-icons/md";
 
+import useSound from "use-sound";
+import addTodoClickSound from "../sounds/ui/beep6.mp3";
+
 interface Todo {
   onClickAddTodo(value: string): void;
 }
 
 const AddTodo = ({ onClickAddTodo }: Todo) => {
   const [inputValue, setInputValue] = useState<string>("");
+  const [playAddTodo] = useSound(addTodoClickSound);
 
   const addTodoHandler = (): void => {
     onClickAddTodo(inputValue);
+    playAddTodo();
     setInputValue("");
   };
 

@@ -1,4 +1,7 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
+import useSound from "use-sound";
+import comleteTodoSound from "./sounds/ui/completed.mp3";
+import unCompleteTodoSound from "./sounds/ui/unComplete2.mp3";
 
 import "./App.css";
 
@@ -19,13 +22,12 @@ function App() {
   const [listTodo, setListTodo] = useState<Todo[]>([]);
   const [completedList, setCompletedList] = useState<Todo[]>([]);
 
-  const completedItems = useRef<HTMLDivElement>(null);
-  const arctiveItems = useRef<HTMLDivElement>(null);
   const [transferTodo, setTransferTodo] = useState<Todo>();
-  const [field, setField] = useState<boolean>(false);
-  // console.log(transferTodo, "aAAAAAAAAAAAAAA");
 
-  const handleAddTodo = (todoValue: string) => {
+  const [completedTodoPlay] = useSound(comleteTodoSound);
+  const [unCompletedTodoPlay] = useSound(unCompleteTodoSound);
+
+  const handleAddTodo = (todoValue: string): void => {
     const todoItem = {
       todoText: todoValue,
       completed: false,
@@ -68,6 +70,7 @@ function App() {
           })
         );
       }
+      completedTodoPlay();
     }
     if (!isCompleted) {
       const findActiveTodo = completedList.find((_, index) => {
@@ -82,6 +85,7 @@ function App() {
           })
         );
       }
+      unCompletedTodoPlay();
     }
   };
 
@@ -89,13 +93,9 @@ function App() {
     event: React.DragEvent<HTMLDivElement>,
     data: Todo
   ) => {
-    setField(false);
     const dataString = JSON.stringify(data);
     event.dataTransfer.setData("text", dataString);
-    if (data.completed) {
-      setField(data.completed);
-    }
-    // setField(!data.completed);
+
     setTransferTodo(data);
   };
 
@@ -106,40 +106,20 @@ function App() {
   };
 
   const allowDrop = (event: React.DragEvent<HTMLDivElement>): void => {
-    // if (!field) {
-    //   return;
-    // }
-    // event.preventDefault();
-    // if (transferTodo?.completed !== field) {
-    //   event.preventDefault();
-    //   return;
-    // }
-    if (transferTodo?.completed) {
-      return;
-    }
     event.preventDefault();
-    // event.preventDefault();
   };
-
-  // const allowDropCompleted = (event: React.DragEvent<HTMLDivElement>): void => {
-  //   if (transferTodo?.completed) {
-  //     return;
-  //   }
-  //   event.preventDefault();
-  // };
 
   return (
     <div className="App">
       <div className="todo">
         <h2 className="todo__title">List of TODOs</h2>
+        <AddTodo onClickAddTodo={handleAddTodo} />
+
         <div
           className="todo__items-active"
-          ref={arctiveItems}
           onDrop={dropHandler}
-          // onDragOver={()=>allowDrop(arctiveItems)}
-          onDragOver={allowDrop}
+          onDragOver={transferTodo?.completed ? allowDrop : undefined}
         >
-          <AddTodo onClickAddTodo={handleAddTodo} />
           {listTodo.length > 0 && (
             <>
               <h4 className="todo__sub-title">
@@ -168,9 +148,13 @@ function App() {
         <div
           className="todo__items-completed"
           onDrop={dropHandler}
-          onDragOver={allowDrop}
-          ref={completedItems}
+          onDragOver={transferTodo?.completed ? undefined : allowDrop}
         >
+          {completedList.length === 0 && (
+            <h4 className="todo__sub-title">
+              Drag TOTO here to mark it as Completed
+            </h4>
+          )}
           {completedList.length > 0 && (
             <>
               <h4 className="todo__sub-title">

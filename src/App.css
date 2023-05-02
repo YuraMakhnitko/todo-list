@@ -122,6 +122,8 @@
   background-color: rgba(8, 80, 100, 0.5);
   border: 1px solid rgba(97, 218, 251, 0.1);
   animation: input-box 0.6s ease-in;
+  width: 100%;
+  max-width: 700px;
   /* animation-delay: 0.2s; */
   /* transform: translate(200%, 0%); */
 }

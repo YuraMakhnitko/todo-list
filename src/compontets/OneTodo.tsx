@@ -1,6 +1,8 @@
 import { useState } from "react";
+import useSound from "use-sound";
+import onClckRemoveTodoSound from "../sounds/ui/deleteTodo.mp3";
 
-import { IoIosAlbums } from "react-icons/io";
+// import { IoIosAlbums } from "react-icons/io";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { MdLibraryAddCheck, MdOutlineLibraryAddCheck } from "react-icons/md";
 
@@ -22,27 +24,29 @@ const OneTodo = ({
   onDragStart,
 }: Todo) => {
   const data = {
-    todoText,
     index,
     completed,
   } as Todo;
-  // console.log(data, "data");
 
-  const todoStyleFade: string = "todo__item-fade";
+  const [removeTotdoSound] = useSound(onClckRemoveTodoSound);
+
+  // const todoStyleFade: string = "todo__item-fade";
   const todoStyleAppear: string = "todo__item";
   const todoStyleRemove: string = "todo__item-remove";
   const [todoAnim, setTodoAnim] = useState<boolean>(false);
 
   const removeTodoHandler = (): void => {
-    setTodoAnim(!todoAnim);
-    setTimeout(() => {
-      onClickRemove(index, completed);
-    }, 200);
+    if (window.confirm("Are you sure you want to delete this TODO?")) {
+      setTodoAnim(!todoAnim);
+      removeTotdoSound();
+      setTimeout(() => {
+        onClickRemove(index, completed);
+      }, 200);
+    }
   };
 
   const completeTodoHandler = (): void => {
     onClickComplete(index, !completed);
-    // setTimeout(() => {}, 200);
   };
 
   return (
