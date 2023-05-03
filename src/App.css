@@ -7,6 +7,9 @@
     rgba(15, 32, 120, 1) 0%,
     rgba(33, 1, 8, 1) 100%
   );
+
+  animation: backTodo 5s ease;
+  animation-iteration-count: infinite;
   /* transition: 0.3s ease 0s; */
 }
 
@@ -28,10 +31,11 @@
 
   animation: backTodo 5s ease;
   animation-iteration-count: infinite;
-  transition: all 0.5s ease;
+  /* transition: all 0.5s ease; */
 }
 @keyframes backTodo {
   from {
+    /* background-position: 50% 0%; */
     /* background: #175d70; */
     /* background: radial-gradient(
       circle,
@@ -49,6 +53,7 @@
     ); */
   }
   to {
+    /* background-position: 50% 100%; */
     /* background: #175d70; */
 
     /* background: radial-gradient(
@@ -163,10 +168,13 @@
   max-width: 700px;
   opacity: 0;
   animation-delay: 0.5s;
-  /* overflow: hidden; */
-  /* animation-delay: 0.2s; */
-  /* transform: translate(200%, 0%); */
 }
+/* .flip-horizontal-bottom {
+  -webkit-animation: flip-horizontal-bottom 0.4s
+    cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+  animation: flip-horizontal-bottom 0.4s cubic-bezier(0.455, 0.03, 0.515, 0.955)
+    both;
+} */
 @keyframes input-box {
   from {
     opacity: 0;

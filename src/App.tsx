@@ -1,7 +1,9 @@
 import { useState } from "react";
 import useSound from "use-sound";
+
 import comleteTodoSound from "./sounds/ui/completed.mp3";
 import unCompleteTodoSound from "./sounds/ui/unComplete2.mp3";
+import onClickRemoveTodoSound from "./sounds/ui/deleteTodo.mp3";
 
 import "./App.css";
 
@@ -27,6 +29,7 @@ function App() {
 
   const [completedTodoPlay] = useSound(comleteTodoSound);
   const [unCompletedTodoPlay] = useSound(unCompleteTodoSound);
+  const [removeTodoSound] = useSound(onClickRemoveTodoSound);
 
   const handleAddTodo = (todoValue: string): void => {
     const todoItem = {
@@ -45,6 +48,7 @@ function App() {
       });
 
       setListTodo(filteredList);
+      removeTodoSound();
     }
     if (isCompleted) {
       const filteredList = completedList.filter((_, ind) => {
@@ -52,6 +56,7 @@ function App() {
       });
 
       setCompletedList(filteredList);
+      removeTodoSound();
     }
   };
 
@@ -113,7 +118,6 @@ function App() {
   return (
     <div className="App">
       <div className="todo">
-        {/* <h2 className="todo__title">List of TODOs</h2> */}
         <AnimatedTitle />
         <AddTodo onClickAddTodo={handleAddTodo} />
 
