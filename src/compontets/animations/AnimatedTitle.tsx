@@ -1,10 +1,4 @@
-import { useState, useEffect } from "react";
-
-export const AnimatedTitle = () => {
-  const [newTitle, setNewTitle] = useState<string[]>([]);
-
-  const title: string | number = "List of TODOs";
-  const titleArr = title.split("");
+export const AnimatedTitle: React.FC = (): JSX.Element => {
   const animTitle: string[] = [
     "L",
     "i",
@@ -21,7 +15,6 @@ export const AnimatedTitle = () => {
     "s",
   ];
 
-  console.log(typeof titleArr, "titleArr");
   return (
     <div className="anim-title__box">
       {animTitle.map((ch: string, index: number) => {
@@ -42,6 +35,3 @@ export const AnimatedTitle = () => {
     </div>
   );
 };
-{
-  /* <h2 className="todo__title">List of TODOs</h2>; */
-}

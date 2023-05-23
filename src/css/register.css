@@ -1,0 +1,50 @@
+.todo-register__input-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: rgba(8, 80, 100, 0);
+  border: 1px solid rgba(97, 218, 251, 0);
+  animation: bottom-to-top 0.3s ease;
+  animation-fill-mode: forwards;
+  animation-delay: 0.5s;
+  width: 100%;
+  max-width: 500px;
+  opacity: 0;
+}
+
+.todo-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 500px;
+  /* gap: 5px; */
+}
+
+.todo-register__input {
+  width: 100%;
+  outline: unset;
+  border: unset;
+  border-radius: 6px;
+  padding: 10px 15px;
+  outline: 1px solid rgba(97, 218, 251, 0.1);
+  transition: 0.2s ease 0s;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.todo-register__input:focus {
+  outline: 2px solid rgb(1, 154, 197);
+}
+
+.todo-register__input-label {
+  font-size: 14px;
+  text-align: left;
+  padding-left: 8px;
+  padding-bottom: 3px;
+  padding-top: 3px;
+  color: rgb(1, 154, 197);
+}

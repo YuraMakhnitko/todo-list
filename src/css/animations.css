@@ -41,6 +41,7 @@
   color: #61dafb;
   text-transform: uppercase;
   opacity: 0;
+  margin-bottom: 10px;
   /* animation: title-letters 3s ease; */
   /* animation-delay: 30s; */
 }
