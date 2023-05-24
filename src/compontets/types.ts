@@ -17,7 +17,7 @@ export const tabStyle = {
 };
 
 export const tabsStyle = {
-  ".css-1aquho2-MuiTabs-indicator": {
+  "& .css-1aquho2-MuiTabs-indicator": {
     backgroundColor: "#61dafb",
     height: "1px",
   },

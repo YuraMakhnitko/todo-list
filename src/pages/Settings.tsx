@@ -5,8 +5,7 @@ import Stack from "@mui/material/Stack";
 import Slider from "@mui/material/Slider";
 import VolumeDown from "@mui/icons-material/VolumeDown";
 import VolumeUp from "@mui/icons-material/VolumeUp";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import Button from "@mui/material/Button";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setVolume, setLanguage } from "../redux/settings/slice";
@@ -17,25 +16,19 @@ export const Settings: React.FC = (): JSX.Element => {
   const { soundsVolume, language } = useSelector(
     (state: RootState) => state.settings
   );
-  const [alignment, setAlignment] = useState(language);
   const dispatch = useDispatch();
-
-  // console.log(language, "language");
+  const enLang = language === "en" ? { color: "#fff" } : { color: "#61dafb" };
+  const uaLang = language !== "en" ? { color: "#fff" } : { color: "#61dafb" };
 
   const handleChangeVolume = (event: Event, newValue: number | number[]) => {
     const volumeValue = (newValue as number) / 100;
     dispatch(setVolume(volumeValue));
   };
 
-  const handleChangeLanguage = (
-    event: React.MouseEvent<HTMLElement>,
-    newAlignment: string
-  ) => {
-    console.log(newAlignment, "handleChangeLang");
-    setAlignment(newAlignment);
-    dispatch(setLanguage(newAlignment));
+  const handleChangeLanguage = (event: React.SyntheticEvent) => {
+    console.log(event.currentTarget.id, "handleChangeLang");
+    dispatch(setLanguage(event.currentTarget.id));
   };
-
   const isAuth: Boolean = false;
 
   return (
@@ -58,26 +51,24 @@ export const Settings: React.FC = (): JSX.Element => {
           {language === Language.en ? "Language" : ""}
           {language === Language.ua ? "Мова:" : ""}
         </label>
-        <ToggleButtonGroup
-          color="primary"
-          value={alignment}
-          exclusive
-          onChange={handleChangeLanguage}
-          aria-label="Platform"
-          sx={{
-            "& .css-1fdqhxf-MuiButtonBase-root-MuiToggleButton-root.Mui-selected":
-              {
-                color: "#fff",
-              },
-          }}
-        >
-          <ToggleButton value="en" sx={{ color: "#61dafb" }}>
-            En
-          </ToggleButton>
-          <ToggleButton value="ua" sx={{ color: "#61dafb" }}>
-            Ua
-          </ToggleButton>
-        </ToggleButtonGroup>
+        <div className="settings-toggle">
+          <Button
+            id="en"
+            sx={enLang}
+            onClick={handleChangeLanguage}
+            className="settings-toggle__button"
+          >
+            EN
+          </Button>
+          <Button
+            id="ua"
+            sx={uaLang}
+            onClick={handleChangeLanguage}
+            className="settings-toggle__button"
+          >
+            UA
+          </Button>
+        </div>
       </div>
       <div className="todo-settings__devider"></div>
 
