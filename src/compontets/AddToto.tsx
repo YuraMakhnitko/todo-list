@@ -1,20 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MdAssignmentAdd } from "react-icons/md";
 
 import useSound from "use-sound";
 import { sounds } from "../settings/sounds";
+import { useDispatch, useSelector } from "react-redux";
+import { addTodo } from "../redux/lists/slice";
+import { addTodoContentText } from "../pages/languageSettings";
 
-interface TodoAdd {
-  onClickAddTodo(value: string): void;
-}
-// import { Todo } from "../settings/types";
+import { RootState } from "../redux/store";
 
-const AddTodo: React.FC<TodoAdd> = ({ onClickAddTodo }) => {
+import type { Todo } from "../settings/types";
+
+export const AddTodo: React.FC = (): JSX.Element => {
+  const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState<string>("");
-  const [playAddTodo] = useSound(sounds.addTodo);
+  const { language } = useSelector((state: RootState) => state.settings);
+  const volume = useSelector((state: RootState) => state.settings.soundsVolume);
+  const [playAddTodo] = useSound(sounds.addTodo, { volume });
+
+  const [changedLanguage, setChangedLanguage] = useState(addTodoContentText.en);
+  useEffect(() => {
+    if (language === "en") {
+      setChangedLanguage(addTodoContentText.en);
+    }
+    if (language === "ua") {
+      setChangedLanguage(addTodoContentText.ua);
+    }
+  }, [language]);
 
   const addTodoHandler = (): void => {
-    onClickAddTodo(inputValue);
+    const todoItem = {
+      todoText: inputValue,
+      completed: false,
+    } as Todo;
+    dispatch(addTodo(todoItem));
     playAddTodo();
     setInputValue("");
   };
@@ -24,7 +43,7 @@ const AddTodo: React.FC<TodoAdd> = ({ onClickAddTodo }) => {
       <input
         value={inputValue}
         className="todo__input"
-        placeholder="Add todo..."
+        placeholder={changedLanguage.placeholerText}
         onChange={(e) => setInputValue(e.target.value)}
       />
       <button
@@ -41,5 +60,3 @@ const AddTodo: React.FC<TodoAdd> = ({ onClickAddTodo }) => {
     </div>
   );
 };
-
-export default AddTodo;

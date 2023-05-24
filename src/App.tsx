@@ -1,16 +1,19 @@
 import { Routes, Route } from "react-router";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-import "./App.css";
+import "./css/App.css";
 
-import { Home } from "./pages/Home";
-import { Register } from "./pages/Register";
-import { Login } from "./pages/Login";
-import { Settings } from "./pages/Settings";
+import { Home, Register, Login, Settings } from "./pages/index";
 
-import { AnimatedTitle } from "./compontets/animations/AnimatedTitle";
-import { TitleTabs } from "./compontets/TitleTabs";
+import { AnimatedTitle, TitleTabs } from "./compontets/index";
 
 const App: React.FC = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate("/");
+  }, []);
+
   return (
     <div className="App">
       <div className="todo">

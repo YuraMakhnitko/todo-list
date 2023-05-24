@@ -1,4 +1,4 @@
-export const AnimatedTitle: React.FC = () => {
+export const AnimatedTitle: React.FC = (): JSX.Element => {
   const animTitle: string[] = [
     "L",
     "i",

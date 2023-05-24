@@ -1,10 +1,15 @@
 import { FieldValues, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+
 import { UserSubmitForm } from "../settings/types";
 import { registerValidationSchema } from "../settings/validations";
+import { registerContentText } from "./languageSettings";
 
-export const Register: React.FC = () => {
+export const Register: React.FC = (): JSX.Element => {
   const {
     register,
     handleSubmit,
@@ -12,8 +17,20 @@ export const Register: React.FC = () => {
   } = useForm<UserSubmitForm>({
     resolver: yupResolver(registerValidationSchema),
   });
+  const { language } = useSelector((state: RootState) => state.settings);
 
-  console.log(errors);
+  const [changedLanguage, setChangedLanguage] = useState(
+    registerContentText.en
+  );
+
+  useEffect(() => {
+    if (language === "en") {
+      setChangedLanguage(registerContentText.en);
+    }
+    if (language === "ua") {
+      setChangedLanguage(registerContentText.ua);
+    }
+  }, [language]);
 
   const onSubmit = (values: FieldValues): void => {
     console.log(values);
@@ -26,10 +43,12 @@ export const Register: React.FC = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="todo-register__input-box">
-        <label className="todo-register__input-label">Name</label>
+        <label className="todo-register__input-label">
+          {changedLanguage.name}
+        </label>
         <input
           className="todo-register__input"
-          placeholder="Name..."
+          placeholder={changedLanguage.namePlaceholder}
           type="name"
           {...register("name")}
         />
@@ -37,34 +56,40 @@ export const Register: React.FC = () => {
         {errors?.name && <p>{errors.name.message}</p>}
       </div>
       <div className="todo-register__input-box">
-        <label className="todo-register__input-label">Email</label>
+        <label className="todo-register__input-label">
+          {changedLanguage.email}
+        </label>
 
         <input
           type="email"
           className="todo-register__input"
-          placeholder="Email..."
+          placeholder={changedLanguage.emailPlaceholder}
           {...register("email")}
         />
         {errors?.email && <p>{errors.email.message}</p>}
       </div>
       <div className="todo-register__input-box">
-        <label className="todo-register__input-label">Password</label>
+        <label className="todo-register__input-label">
+          {changedLanguage.password}
+        </label>
 
         <input
           type="password"
           className="todo-register__input"
-          placeholder="Password..."
+          placeholder={changedLanguage.passwordPlaceholder}
           {...register("password")}
         />
         {errors?.password && <p>{errors.password.message}</p>}
       </div>
       <div className="todo-register__input-box">
-        <label className="todo-register__input-label">Confirm password</label>
+        <label className="todo-register__input-label">
+          {changedLanguage.confirmPassword}
+        </label>
 
         <input
           type="password"
           className="todo-register__input"
-          placeholder="Confirm password..."
+          placeholder={changedLanguage.passwordPlaceholder}
           {...register("confirmPassword")}
         />
         {errors?.confirmPassword && <p>{errors.confirmPassword.message}</p>}
@@ -75,7 +100,7 @@ export const Register: React.FC = () => {
         className="todo__button-submit"
         title={"Sumbmit"}
       >
-        Submit
+        {changedLanguage.submitButton}
       </button>
     </form>
   );
