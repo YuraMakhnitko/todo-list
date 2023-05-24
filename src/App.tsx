@@ -1,12 +1,12 @@
-import { Routes, Route } from "react-router";
 import { useEffect } from "react";
+import { Routes, Route } from "react-router";
 import { useNavigate } from "react-router-dom";
 
 import "./css/App.css";
 
 import { Home, Register, Login, Settings } from "./pages/index";
 
-import { AnimatedTitle, TitleTabs } from "./compontets/index";
+import { AnimatedTitle, TitleTabs } from "./components/index";
 
 const App: React.FC = () => {
   const navigate = useNavigate();
@@ -21,9 +21,9 @@ const App: React.FC = () => {
         <TitleTabs />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="register" element={<Register />} />
-          <Route path="login" element={<Login />} />
-          <Route path="settings" element={<Settings />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/settings" element={<Settings />} />
         </Routes>
       </div>
     </div>

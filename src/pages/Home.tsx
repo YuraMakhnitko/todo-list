@@ -4,7 +4,7 @@ import useSound from "use-sound";
 import { sounds } from "../settings/sounds";
 import { homeContentText } from "./languageSettings";
 
-import { OneTodo, AddTodo } from "../compontets/index";
+import { OneTodo, AddTodo } from "../components/index";
 
 import type { Todo } from "../settings/types";
 import type { RootState } from "../redux/store";

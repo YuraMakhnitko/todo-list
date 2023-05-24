@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import listsTodosReducer from "./lists/slice";
-import soundsReduser from "./settings/slice";
+import soundsReducer from "./settings/slice";
+import authReducer from "./auth/slice";
 
 export const store = configureStore({
   reducer: {
     listsTodos: listsTodosReducer,
-    settings: soundsReduser,
+    settings: soundsReducer,
+    auth: authReducer,
   },
 });
 
