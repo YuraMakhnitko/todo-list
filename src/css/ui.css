@@ -89,10 +89,3 @@
   animation-fill-mode: forwards;
   animation-delay: 0.7s;
 }
-
-.todo__button-logout:hover {
-  /* color: rgb(198, 243, 255); */
-  color: #fff;
-  background-color: rgba(8, 80, 100, 0.8);
-  /* justify-content: space-between; */
-}

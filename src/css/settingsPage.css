@@ -2,16 +2,10 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 100%;
-  max-width: 500px;
 }
 
-.todo-settings__text,
-.todo-settings__label {
-  font-size: 19px;
+.todo-settings__text {
   color: rgba(97, 218, 251, 1);
-  margin: 5px 0px;
-  letter-spacing: 1.5px;
 }
 .todo-settings__text span {
   color: #fff;
@@ -19,29 +13,7 @@
 }
 
 .todo-settings__language-box {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  gap: 20px;
-  margin: 5px 0px;
 }
 
-.todo-settings__label,
-.todo-settings__sounds-box {
-  margin: 5px 0px;
-}
-
-.todo-settings__sounds-box {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  width: 100%;
-  gap: 30px;
-}
-
-.todo-settings__devider {
-  height: 0.5px;
-  width: 100%;
-  background-color: rgba(97, 218, 251, 0.1);
+.todo-settings__label {
 }

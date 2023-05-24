@@ -1,39 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { MdAssignmentAdd } from "react-icons/md";
 
 import useSound from "use-sound";
 import { sounds } from "../settings/sounds";
-import { useDispatch, useSelector } from "react-redux";
-import { addTodo } from "../redux/lists/slice";
-import { addTodoContentText } from "../pages/languageSettings";
 
-import { RootState } from "../redux/store";
+interface TodoAdd {
+  onClickAddTodo(value: string): void;
+}
+// import { Todo } from "../settings/types";
 
-import type { Todo } from "../settings/types";
-
-export const AddTodo: React.FC = (): JSX.Element => {
-  const dispatch = useDispatch();
+const AddTodo: React.FC<TodoAdd> = ({ onClickAddTodo }) => {
   const [inputValue, setInputValue] = useState<string>("");
-  const { language } = useSelector((state: RootState) => state.settings);
-  const volume = useSelector((state: RootState) => state.settings.soundsVolume);
-  const [playAddTodo] = useSound(sounds.addTodo, { volume });
-
-  const [changedLanguage, setChangedLanguage] = useState(addTodoContentText.en);
-  useEffect(() => {
-    if (language === "en") {
-      setChangedLanguage(addTodoContentText.en);
-    }
-    if (language === "ua") {
-      setChangedLanguage(addTodoContentText.ua);
-    }
-  }, [language]);
+  const [playAddTodo] = useSound(sounds.addTodo);
 
   const addTodoHandler = (): void => {
-    const todoItem = {
-      todoText: inputValue,
-      completed: false,
-    } as Todo;
-    dispatch(addTodo(todoItem));
+    onClickAddTodo(inputValue);
     playAddTodo();
     setInputValue("");
   };
@@ -43,7 +24,7 @@ export const AddTodo: React.FC = (): JSX.Element => {
       <input
         value={inputValue}
         className="todo__input"
-        placeholder={changedLanguage.placeholerText}
+        placeholder="Add todo..."
         onChange={(e) => setInputValue(e.target.value)}
       />
       <button
@@ -60,3 +41,5 @@ export const AddTodo: React.FC = (): JSX.Element => {
     </div>
   );
 };
+
+export default AddTodo;
