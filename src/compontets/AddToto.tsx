@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import { MdAssignmentAdd } from "react-icons/md";
 
 import useSound from "use-sound";
 import { sounds } from "../settings/sounds";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addTodo } from "../redux/lists/slice";
 import { addTodoContentText } from "../pages/languageSettings";
 
@@ -15,19 +14,17 @@ import type { Todo } from "../settings/types";
 export const AddTodo: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState<string>("");
-  const [playAddTodo] = useSound(sounds.addTodo);
   const { language } = useSelector((state: RootState) => state.settings);
+  const volume = useSelector((state: RootState) => state.settings.soundsVolume);
+  const [playAddTodo] = useSound(sounds.addTodo, { volume });
 
   const [changedLanguage, setChangedLanguage] = useState(addTodoContentText.en);
   useEffect(() => {
-    // console.log(language, "language");
     if (language === "en") {
       setChangedLanguage(addTodoContentText.en);
-      // console.log(language, "language");
     }
     if (language === "ua") {
       setChangedLanguage(addTodoContentText.ua);
-      // console.log(language, "language");
     }
   }, [language]);
 

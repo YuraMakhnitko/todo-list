@@ -1,86 +1,71 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
-import { styled } from "@mui/material/styles";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 
+import HouseIcon from "@mui/icons-material/House";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
+import SettingsIcon from "@mui/icons-material/Settings";
+
 import { settingsContentText } from "../pages/languageSettings";
 
-interface StyledTabsProps {
-  children?: React.ReactNode;
-  value: number;
-  onChange: (event: React.SyntheticEvent, newValue: number) => void;
-}
+import { useScreenSize } from "../hooks/useScreenSize";
 
-const StyledTabs = styled((props: StyledTabsProps) => (
-  <Tabs
-    {...props}
-    TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
-  />
-))({
-  "& .css-heg063-MuiTabs-flexContainer": {
-    justifyContent: "space-between",
-  },
-  "& .MuiTabs-indicator": {
-    display: "flex",
-    justifyContent: "center",
-    backgroundColor: "transparent",
-  },
-  "& .MuiTabs-indicatorSpan": {
-    maxWidth: 40,
-    width: "100%",
-    backgroundColor: "#61dafb",
-  },
-  "& .css-1pbqk26-MuiButtonBase-root-MuiTab-root.Mui-selected": {
-    transform: "scale(1.01)",
-    transition: "0.1s  ease",
-  },
-});
-
-interface StyledTabProps {
-  label: string;
-}
-
-const StyledTab = styled((props: StyledTabProps) => (
-  <Tab disableRipple {...props} />
-))(({ theme }) => ({
-  textTransform: "none",
-  fontWeight: theme.typography.fontWeightRegular,
-  fontSize: theme.typography.pxToRem(15),
-  marginRight: theme.spacing(1),
+const tabStyle = {
+  minWidth: "70px",
   color: "#61dafb",
   "&.Mui-selected": {
     color: "#fff",
   },
-  "&.Mui-focusVisible": {
-    backgroundColor: "rgba(100, 95, 228, 0.32)",
+};
+
+const tabsStyle = {
+  "& .css-heg063-MuiTabs-flexContainer": {
+    justifyContent: "space-between",
   },
-}));
+  "& .css-1aquho2-MuiTabs-indicator": {
+    backgroundColor: "#61dafb",
+    height: "1px",
+  },
+};
+const pages: string[] = ["/", "/login", "/register", "/settings"];
+
 export const TitleTabs = (): JSX.Element => {
   const { language } = useSelector((state: RootState) => state.settings);
   const [value, setValue] = React.useState(0);
-  const [changedLanguage, setChangedLanguage] = React.useState(
+  const [changedLanguage, setChangedLanguage] = useState(
     settingsContentText.en
   );
 
-  React.useEffect(() => {
-    // console.log(language, "language");
+  const screeSize = useScreenSize();
+
+  const tabHomeIcon =
+    screeSize.width > 767.98 ? "" : <HouseIcon fontSize="medium" />;
+  const tabLoginIcon =
+    screeSize.width > 767.98 ? "" : <ExitToAppIcon fontSize="medium" />;
+  const tabRegIcon =
+    screeSize.width > 767.98 ? "" : <AppRegistrationIcon fontSize="medium" />;
+  const tabSettingsIcon =
+    screeSize.width > 767.98 ? "" : <SettingsIcon fontSize="medium" />;
+  const tabHomeLabel = screeSize.width > 767.98 ? changedLanguage.home : null;
+  const tabRegLabel = screeSize.width > 767.98 ? changedLanguage.login : null;
+  const tabLoginLabel =
+    screeSize.width > 767.98 ? changedLanguage.register : null;
+  const tabSettingsLabel =
+    screeSize.width > 767.98 ? changedLanguage.settings : null;
+
+  useEffect(() => {
     if (language === "en") {
       setChangedLanguage(settingsContentText.en);
-      // console.log(language, "language");
     }
     if (language === "ua") {
       setChangedLanguage(settingsContentText.ua);
-      // console.log(language, "language");
     }
   }, [language, value]);
-
-  // console.log(changedLanguage, "changedLanguage");
-
-  const pages: string[] = ["/", "/login", "/register", "/settings"];
 
   const navigate = useNavigate();
 
@@ -95,16 +80,24 @@ export const TitleTabs = (): JSX.Element => {
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ bgcolor: "transparent" }}>
-        <StyledTabs
+        <Tabs
           value={value}
           onChange={handleChange}
           aria-label="styled tabs example"
+          centered
+          // variant="scrollable"
+          // scrollButtons="auto"
+          sx={tabsStyle}
         >
-          <StyledTab label={changedLanguage.home} />
-          {!isAuth && <StyledTab label={changedLanguage.login} />}
-          {!isAuth && <StyledTab label={changedLanguage.register} />}
-          <StyledTab label={changedLanguage.settings} />
-        </StyledTabs>
+          <Tab icon={tabHomeIcon} label={tabHomeLabel} sx={tabStyle} />
+          {!isAuth && (
+            <Tab icon={tabLoginIcon} label={tabLoginLabel} sx={tabStyle} />
+          )}
+          {!isAuth && (
+            <Tab icon={tabRegIcon} label={tabRegLabel} sx={tabStyle} />
+          )}
+          <Tab icon={tabSettingsIcon} label={tabSettingsLabel} sx={tabStyle} />
+        </Tabs>
         <Box sx={{ p: 2 }} />
       </Box>
     </Box>
