@@ -122,9 +122,9 @@
   transition: 0.3s ease 0s;
   animation: item 0.3s ease;
 }
-.todo__item:hover {
+/* .todo__item:hover {
   transform: translate(1px, -1px);
-}
+} */
 
 .todo__item-fade {
   display: flex;
