@@ -8,6 +8,9 @@ interface Sounds {
   unComplete: string;
   remove: string;
   addTodo: string;
+  // changePage: string;
+  // submitSound: string
+  // toggle: string
 }
 
 export const sounds: Sounds = {
@@ -15,4 +18,7 @@ export const sounds: Sounds = {
   unComplete,
   remove,
   addTodo,
+  // changePage,
+  // submitSound
+  // toggle
 };

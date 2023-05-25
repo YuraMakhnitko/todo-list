@@ -36,12 +36,11 @@ export const OneTodo: React.FC<Todo> = ({
 
   const removeTodoHandler = (): void => {
     if (window.confirm("Are you sure you want to delete this TODO?")) {
+      removeTodoSound();
       setTodoAnim(!todoAnim);
       setTimeout(() => {
         dispatch(removeTodo(data));
       }, 200);
-
-      removeTodoSound();
     }
   };
 
