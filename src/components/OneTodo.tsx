@@ -35,18 +35,20 @@ export const OneTodo: React.FC<Todo> = ({
   const [removeTodoSound] = useSound(sounds.remove, { volume });
 
   const removeTodoHandler = (): void => {
-    let deleted = false;
-    if (window.confirm("Are you sure you want to delete this TODO?")) {
-      deleted = true;
-      // removeTodoSound();
-      setTodoAnim(!todoAnim);
-      setTimeout(() => {
-        dispatch(removeTodo(data));
-      }, 200);
-    }
-    if (deleted) {
-      removeTodoSound();
-    }
+    // if (window.confirm("Are you sure you want to delete this TODO?")) {
+    //   removeTodoSound();
+    //   setTodoAnim(!todoAnim);
+    //   setTimeout(() => {
+    //     dispatch(removeTodo(data));
+    //   }, 200);
+    //   console.log("sound hahaha");
+    // }
+
+    removeTodoSound();
+    setTodoAnim(!todoAnim);
+    setTimeout(() => {
+      dispatch(removeTodo(data));
+    }, 200);
   };
 
   const completeTodoHandler = (): void => {
