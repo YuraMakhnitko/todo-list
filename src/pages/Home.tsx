@@ -91,7 +91,9 @@ export const Home: React.FC = (): JSX.Element => {
         onDragOver={transferTodo?.completed ? undefined : allowDrop}
       >
         {todosListCompleted.length === 0 && todosList.length > 0 && (
-          <h4 className="todo__sub-title">{changedLanguage.dragTodo}</h4>
+          <h4 className="todo__sub-title-completed">
+            {changedLanguage.dragTodo}
+          </h4>
         )}
         {todosListCompleted.length > 0 && (
           <>

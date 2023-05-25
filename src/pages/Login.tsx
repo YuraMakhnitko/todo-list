@@ -51,7 +51,7 @@ export const Login: React.FC = (): JSX.Element => {
           {...register("email")}
         />
       </div>
-      {errors?.email && <p>{errors.email.message}</p>}
+      {errors?.email && <p className="form-errors">{errors.email.message}</p>}
       <div className="todo-register__input-box">
         <label className="todo-register__input-label">
           {changedLanguage.password}
@@ -62,12 +62,14 @@ export const Login: React.FC = (): JSX.Element => {
           {...register("password")}
         />
       </div>
-      {errors?.password && <p>{errors.password.message}</p>}
+      {errors?.password && (
+        <p className="form-errors">{errors.password.message}</p>
+      )}
       <button
         // disabled={!inputValue}
         type="submit"
         className="todo__button-submit"
-        title={"Add to list"}
+        title="Add to list"
       >
         {changedLanguage.submitButton}
       </button>

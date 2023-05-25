@@ -78,7 +78,20 @@
   color: #61dafb;
   margin-bottom: 5px;
   margin-top: 10px;
-  animation: sub-title 0.4s ease-in;
+  animation: bottom-to-top 0.3s ease;
+  animation-fill-mode: forwards;
+  animation-delay: 0.5s;
+  opacity: 0;
+}
+
+.todo__sub-title-completed {
+  color: #61dafb;
+  margin-bottom: 5px;
+  margin-top: 10px;
+  animation: bottom-to-top 0.3s ease;
+  animation-fill-mode: forwards;
+  animation-delay: 0.7s;
+  opacity: 0;
 }
 @keyframes sub-title {
   from {
@@ -162,7 +175,7 @@
   width: 100%;
   max-width: 700px;
   opacity: 0;
-  animation-delay: 0.5s;
+  animation-delay: 0.3s;
 }
 
 @keyframes bottom-to-top {

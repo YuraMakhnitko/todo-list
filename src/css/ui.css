@@ -61,7 +61,7 @@
   max-width: 360px;
   animation: bottom-to-top 0.3s ease;
   animation-fill-mode: forwards;
-  animation-delay: 0.7s;
+  animation-delay: 0.5s;
 }
 
 .todo__button-submit:hover {

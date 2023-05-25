@@ -4,6 +4,10 @@
   align-items: flex-start;
   width: 100%;
   max-width: 500px;
+  animation: bottom-to-top 0.3s ease;
+  animation-fill-mode: forwards;
+  animation-delay: 0.3s;
+  opacity: 0;
 }
 
 .todo-settings__text,

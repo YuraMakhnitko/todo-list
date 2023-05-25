@@ -50,7 +50,7 @@ export const Register: React.FC = (): JSX.Element => {
           {...register("name")}
         />
 
-        {errors?.name && <p>{errors.name.message}</p>}
+        {errors?.name && <p className="form-errors">{errors.name.message}</p>}
       </div>
       <div className="todo-register__input-box">
         <label className="todo-register__input-label">
@@ -63,7 +63,7 @@ export const Register: React.FC = (): JSX.Element => {
           placeholder={changedLanguage.emailPlaceholder}
           {...register("email")}
         />
-        {errors?.email && <p>{errors.email.message}</p>}
+        {errors?.email && <p className="form-errors">{errors.email.message}</p>}
       </div>
       <div className="todo-register__input-box">
         <label className="todo-register__input-label">
@@ -76,7 +76,9 @@ export const Register: React.FC = (): JSX.Element => {
           placeholder={changedLanguage.passwordPlaceholder}
           {...register("password")}
         />
-        {errors?.password && <p>{errors.password.message}</p>}
+        {errors?.password && (
+          <p className="form-errors">{errors.password.message}</p>
+        )}
       </div>
       <div className="todo-register__input-box">
         <label className="todo-register__input-label">
@@ -89,7 +91,9 @@ export const Register: React.FC = (): JSX.Element => {
           placeholder={changedLanguage.passwordPlaceholder}
           {...register("confirmPassword")}
         />
-        {errors?.confirmPassword && <p>{errors.confirmPassword.message}</p>}
+        {errors?.confirmPassword && (
+          <p className="form-errors">{errors.confirmPassword.message}</p>
+        )}
       </div>
       <button
         // disabled={!isValid}

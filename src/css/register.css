@@ -8,7 +8,7 @@
   border: 1px solid rgba(97, 218, 251, 0);
   animation: bottom-to-top 0.3s ease;
   animation-fill-mode: forwards;
-  animation-delay: 0.5s;
+  animation-delay: 0.3s;
   width: 100%;
   max-width: 500px;
   opacity: 0;
@@ -47,4 +47,13 @@
   padding-bottom: 3px;
   padding-top: 3px;
   color: rgb(1, 154, 197);
+}
+
+.form-errors {
+  margin: 0;
+  font-size: 14px;
+  letter-spacing: 1.11px;
+  color: rgb(248, 140, 101);
+  text-align: left;
+  width: 100%;
 }
