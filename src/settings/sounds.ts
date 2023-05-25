@@ -3,7 +3,14 @@ import unComplete from "../sounds/ui/unComplete2.mp3";
 import remove from "../sounds/ui/deleteTodo.mp3";
 import addTodo from "../sounds/ui/beep6.mp3";
 
-export const sounds = {
+interface Sounds {
+  comlete: string;
+  unComplete: string;
+  remove: string;
+  addTodo: string;
+}
+
+export const sounds: Sounds = {
   comlete,
   unComplete,
   remove,

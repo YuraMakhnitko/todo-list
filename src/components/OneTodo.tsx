@@ -28,7 +28,7 @@ export const OneTodo: React.FC<Todo> = ({
   const [todoAnim, setTodoAnim] = useState<boolean>(false);
 
   const volume = useSelector((state: RootState) => state.settings.soundsVolume);
-  console.log(volume);
+  // console.log(volume);
 
   const [completedTodoPlay] = useSound(sounds.comlete, { volume });
   const [unCompletedTodoPlay] = useSound(sounds.unComplete, { volume });
