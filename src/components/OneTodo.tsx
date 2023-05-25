@@ -2,7 +2,6 @@ import { useState } from "react";
 import useSound from "use-sound";
 import { sounds } from "../settings/sounds";
 
-import { RiDeleteBinLine } from "react-icons/ri";
 import { MdLibraryAddCheck, MdOutlineLibraryAddCheck } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { removeTodo, comleteOneTodo } from "../redux/lists/slice";
@@ -10,6 +9,7 @@ import { useSelector } from "react-redux";
 
 import type { Todo } from "../settings/types";
 import { RootState } from "../redux/store";
+import { ModalConfirm } from "./ModalConfirm";
 
 export const OneTodo: React.FC<Todo> = ({
   todoText,
@@ -28,22 +28,12 @@ export const OneTodo: React.FC<Todo> = ({
   const [todoAnim, setTodoAnim] = useState<boolean>(false);
 
   const volume = useSelector((state: RootState) => state.settings.soundsVolume);
-  // console.log(volume);
 
   const [completedTodoPlay] = useSound(sounds.comlete, { volume });
   const [unCompletedTodoPlay] = useSound(sounds.unComplete, { volume });
   const [removeTodoSound] = useSound(sounds.remove, { volume });
 
   const removeTodoHandler = (): void => {
-    // if (window.confirm("Are you sure you want to delete this TODO?")) {
-    //   removeTodoSound();
-    //   setTodoAnim(!todoAnim);
-    //   setTimeout(() => {
-    //     dispatch(removeTodo(data));
-    //   }, 200);
-    //   console.log("sound hahaha");
-    // }
-
     removeTodoSound();
     setTodoAnim(!todoAnim);
     setTimeout(() => {
@@ -79,13 +69,7 @@ export const OneTodo: React.FC<Todo> = ({
             <MdLibraryAddCheck style={{ width: "25px", height: "25px" }} />
           )}
         </button>
-        <button
-          className="todo__button-delete"
-          title="Delete"
-          onClick={removeTodoHandler}
-        >
-          <RiDeleteBinLine style={{ width: "25px", height: "25px" }} />
-        </button>
+        <ModalConfirm onAction={removeTodoHandler} />
       </div>
     </div>
   );
