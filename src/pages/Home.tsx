@@ -4,7 +4,12 @@ import useSound from "use-sound";
 import { sounds } from "../settings/sounds";
 import { homeContentText } from "./languageSettings";
 
-import { OneTodo, AddTodo } from "../components/index";
+import {
+  OneTodo,
+  AddTodo,
+  TodosHomeMessages,
+  TodosCompletedHomeMessages,
+} from "../components/index";
 
 import type { Todo } from "../settings/types";
 import type { RootState } from "../redux/store";
@@ -22,17 +27,12 @@ export const Home: React.FC = (): JSX.Element => {
   );
 
   const [transferTodo, setTransferTodo] = useState<Todo>();
-
   const { language } = useSelector((state: RootState) => state.settings);
-
   const [changedLanguage, setChangedLanguage] = useState(homeContentText.en);
 
   useEffect(() => {
-    if (language === "en") {
-      setChangedLanguage(homeContentText.en);
-    }
-    if (language === "ua") {
-      setChangedLanguage(homeContentText.ua);
+    if (language === "en" || language === "ua") {
+      setChangedLanguage(homeContentText[language]);
     }
   }, [language]);
 
@@ -61,7 +61,6 @@ export const Home: React.FC = (): JSX.Element => {
   return (
     <>
       <AddTodo />
-
       <div
         className="todo__items-active"
         onDrop={dropHandler}
@@ -69,30 +68,7 @@ export const Home: React.FC = (): JSX.Element => {
       >
         {todosList.length > 0 && (
           <>
-            {language === "en" && (
-              <h4 className="todo__sub-title">
-                {`Your have ${todosList.length} active TODO${
-                  todosList.length > 1 ? "s" : ""
-                }!`}
-              </h4>
-            )}
-            {language === "ua" &&
-              todosList.length > 1 &&
-              todosList.length < 5 && (
-                <h4 className="todo__sub-title">
-                  {`Ви маєте ${todosList.length} активнi ЗАВДАННЯ!`}
-                </h4>
-              )}
-            {language === "ua" && todosList.length === 1 && (
-              <h4 className="todo__sub-title">
-                {`Ви маєте ${todosList.length} активнe ЗАВДАННЯ!`}
-              </h4>
-            )}
-            {language === "ua" && todosList.length > 4 && (
-              <h4 className="todo__sub-title">
-                {`Ви маєте ${todosList.length} активних ЗАВДАНЬ!`}
-              </h4>
-            )}
+            <TodosHomeMessages todosListLength={todosList.length} />
             {todosList.map((todo: Todo, index: number) => {
               return (
                 <OneTodo
@@ -119,26 +95,9 @@ export const Home: React.FC = (): JSX.Element => {
         )}
         {todosListCompleted.length > 0 && (
           <>
-            {language === "en" && (
-              <h4 className="todo__sub-title">
-                {`Completed ${todosListCompleted.length} TODO${
-                  todosListCompleted.length > 1 ? "s" : ""
-                }`}
-              </h4>
-            )}
-            {language === "ua" &&
-              todosListCompleted.length > 0 &&
-              todosListCompleted.length < 5 && (
-                <h4 className="todo__sub-title">
-                  {`Виконано ${todosListCompleted.length} ЗАВДАННЯ`}
-                </h4>
-              )}
-
-            {language === "ua" && todosListCompleted.length > 4 && (
-              <h4 className="todo__sub-title">
-                {`Виконано ${todosListCompleted.length} ЗАВДАНЬ`}
-              </h4>
-            )}
+            <TodosCompletedHomeMessages
+              todosListCompletedLength={todosListCompleted.length}
+            />
 
             {todosListCompleted
               .map((todo, index) => {

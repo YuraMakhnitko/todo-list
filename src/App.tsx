@@ -8,7 +8,7 @@ import { Home, Register, Login, Settings } from "./pages/index";
 
 import { AnimatedTitle, TitleTabs } from "./components/index";
 
-const App: React.FC = () => {
+const App: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
   useEffect(() => {
     navigate("/");

@@ -20,11 +20,8 @@ export const AddTodo: React.FC = (): JSX.Element => {
 
   const [changedLanguage, setChangedLanguage] = useState(addTodoContentText.en);
   useEffect(() => {
-    if (language === "en") {
-      setChangedLanguage(addTodoContentText.en);
-    }
-    if (language === "ua") {
-      setChangedLanguage(addTodoContentText.ua);
+    if (language === "en" || language === "ua") {
+      setChangedLanguage(addTodoContentText[language]);
     }
   }, [language]);
 

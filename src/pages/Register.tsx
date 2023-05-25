@@ -24,11 +24,8 @@ export const Register: React.FC = (): JSX.Element => {
   );
 
   useEffect(() => {
-    if (language === "en") {
-      setChangedLanguage(registerContentText.en);
-    }
-    if (language === "ua") {
-      setChangedLanguage(registerContentText.ua);
+    if (language === "en" || language === "ua") {
+      setChangedLanguage(registerContentText[language]);
     }
   }, [language]);
 

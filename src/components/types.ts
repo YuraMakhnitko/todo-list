@@ -8,6 +8,13 @@ export enum TabsLanguage {
   settingsEn = "Settings",
   settingsUa = "Налаштування",
 }
+
+export type TabsProps = {
+  home: string;
+  login: string;
+  register: string;
+  settings: string;
+};
 export const tabStyle = {
   minWidth: "70px",
   color: "#61dafb",

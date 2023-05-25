@@ -11,7 +11,7 @@ const initialState: Settings = {
 };
 
 export const settingsSlice = createSlice({
-  name: "sounds",
+  name: "settings",
   initialState,
   reducers: {
     setVolume(state, action: PayloadAction<number>) {
