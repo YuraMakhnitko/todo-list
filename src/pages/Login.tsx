@@ -68,7 +68,7 @@ export const Login: React.FC = (): JSX.Element => {
       <button
         // disabled={!inputValue}
         type="submit"
-        className="todo__button-submit"
+        className="todo__button"
         title="Add to list"
       >
         {changedLanguage.submitButton}

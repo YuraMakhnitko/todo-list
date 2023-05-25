@@ -98,7 +98,7 @@ export const Register: React.FC = (): JSX.Element => {
       <button
         // disabled={!isValid}
         type="submit"
-        className="todo__button-submit"
+        className="todo__button"
         title={"Sumbmit"}
       >
         {changedLanguage.submitButton}

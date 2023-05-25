@@ -1,6 +1,5 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 
 import DialogTitle from "@mui/material/DialogTitle";
@@ -48,17 +47,12 @@ const ConfirmationDialogRaw = (props: ConfirmationDialogRawProps) => {
       <DialogTitle sx={{ color: "#61dafb;" }}>Delete this TODO?</DialogTitle>
 
       <DialogActions>
-        <Button
-          autoFocus
-          onClick={handleCancel}
-          variant="outlined"
-          sx={{ color: "#fff" }}
-        >
+        <button autoFocus className="todo__button" onClick={handleCancel}>
           Cancel
-        </Button>
-        <Button onClick={handleOk} sx={{ color: "#fff" }} variant="outlined">
+        </button>
+        <button className="todo__button" onClick={handleOk}>
           Ok
-        </Button>
+        </button>
       </DialogActions>
     </Dialog>
   );
@@ -81,11 +75,7 @@ export const ModalConfirm: React.FC<ModalConfirmProps> = (
   return (
     <Box sx={{ width: "100%", maxWidth: 360 }}>
       <List component="div" role="group">
-        <button
-          className="todo__button-delete"
-          title="Delete"
-          onClick={handleClickListItem}
-        >
+        <button className="todo__button-delete" onClick={handleClickListItem}>
           <RiDeleteBinLine style={{ width: "25px", height: "25px" }} />
         </button>
         <ConfirmationDialogRaw

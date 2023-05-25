@@ -46,7 +46,7 @@
   color: rgba(255, 0, 0, 1);
 }
 
-.todo__button-submit {
+.todo__button {
   margin-top: 10px;
   padding: 10px 20px;
   color: rgba(97, 218, 251, 1);
@@ -64,7 +64,7 @@
   animation-delay: 0.5s;
 }
 
-.todo__button-submit:hover {
+.todo__button:hover {
   color: #fff;
   background-color: rgba(8, 80, 100, 0.8);
 }

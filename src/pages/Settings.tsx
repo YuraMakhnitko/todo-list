@@ -62,7 +62,7 @@ export const Settings: React.FC = (): JSX.Element => {
       <VolumeSlider />
       <div className="todo-settings__devider"></div>
       {isAuth && (
-        <button className="todo__button-logout" onClick={onLogoutClick}>
+        <button className="todo__button" onClick={onLogoutClick}>
           {logoutButtonTitle}
         </button>
       )}
