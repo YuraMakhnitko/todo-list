@@ -8,6 +8,8 @@ import { RootState } from "../redux/store";
 import { UserSubmitForm } from "../settings/types";
 import { registerValidationSchema } from "../settings/validations";
 import { registerContentText } from "./languageSettings";
+import useSound from "use-sound";
+import { sounds } from "../settings/sounds";
 
 export const Register: React.FC = (): JSX.Element => {
   const {
@@ -18,6 +20,8 @@ export const Register: React.FC = (): JSX.Element => {
     resolver: yupResolver(registerValidationSchema),
   });
   const { language } = useSelector((state: RootState) => state.settings);
+  const volume = useSelector((state: RootState) => state.settings.soundsVolume);
+  const [submitSound] = useSound(sounds.submitSound, { volume });
 
   const [changedLanguage, setChangedLanguage] = useState(
     registerContentText.en
@@ -31,6 +35,7 @@ export const Register: React.FC = (): JSX.Element => {
 
   const onSubmit = (values: FieldValues): void => {
     console.log(values);
+    submitSound();
     console.log("hi");
   };
   return (

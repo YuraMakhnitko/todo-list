@@ -4,13 +4,18 @@ import { useNavigate } from "react-router-dom";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-
 import { RootState } from "../../redux/store";
 import { settingsContentText } from "../../pages/languageSettings";
 
 import { tabStyle, tabsStyle, TabsProps } from "../types";
+import useSound from "use-sound";
+import { sounds } from "../../settings/sounds";
 
 export const DesctopTabs: React.FC = () => {
+  const volume = useSelector((state: RootState) => state.settings.soundsVolume);
+
+  const [changePageSound] = useSound(sounds.changePage, { volume });
+
   const pagePath = window.location.pathname;
   const navigate = useNavigate();
 
@@ -47,6 +52,7 @@ export const DesctopTabs: React.FC = () => {
     setConfirmPath(path);
     navigate(path);
     setValue(newValue);
+    changePageSound();
   };
 
   return (

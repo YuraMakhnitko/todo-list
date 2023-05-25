@@ -10,6 +10,8 @@ import { setAuth } from "../redux/auth/slice";
 import { UserSubmitForm } from "../settings/types";
 import { LoginValidationSchema } from "../settings/validations";
 import { registerContentText } from "./languageSettings";
+import useSound from "use-sound";
+import { sounds } from "../settings/sounds";
 
 export const Login: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
@@ -19,6 +21,9 @@ export const Login: React.FC = (): JSX.Element => {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<UserSubmitForm>({ resolver: yupResolver(LoginValidationSchema) });
+
+  const volume = useSelector((state: RootState) => state.settings.soundsVolume);
+  const [submitSound] = useSound(sounds.submitSound, { volume });
 
   const { language } = useSelector((state: RootState) => state.settings);
 
@@ -35,6 +40,7 @@ export const Login: React.FC = (): JSX.Element => {
   const onSubmit = (values: FieldValues): void => {
     dispatch(setAuth(true));
     navigate("/");
+    submitSound();
     console.log(values);
     console.log("hi");
   };

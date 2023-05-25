@@ -10,11 +10,18 @@ import { Language } from "../redux/types";
 import { setAuth } from "../redux/auth/slice";
 import { VolumeSlider } from "../components/VolumeSlider";
 
+import useSound from "use-sound";
+import { sounds } from "../settings/sounds";
+
 export const Settings: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isAuth } = useSelector((state: RootState) => state.auth);
   const { language } = useSelector((state: RootState) => state.settings);
+  const volume = useSelector((state: RootState) => state.settings.soundsVolume);
+
+  const [toggleSound] = useSound(sounds.toggle, { volume });
+  const [submitSound] = useSound(sounds.submitSound, { volume });
 
   const enLang = language === "en" ? { color: "#fff" } : { color: "#61dafb" };
   const uaLang = language !== "en" ? { color: "#fff" } : { color: "#61dafb" };
@@ -24,10 +31,12 @@ export const Settings: React.FC = (): JSX.Element => {
 
   const handleChangeLanguage = (event: React.SyntheticEvent): void => {
     dispatch(setLanguage(event.currentTarget.id));
+    toggleSound();
   };
 
   const onLogoutClick = (): void => {
     dispatch(setAuth(false));
+    submitSound();
     navigate("/");
   };
 

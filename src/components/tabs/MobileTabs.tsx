@@ -10,11 +10,17 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import SettingsIcon from "@mui/icons-material/Settings";
 
+import useSound from "use-sound";
+import { sounds } from "../../settings/sounds";
+
 import { RootState } from "../../redux/store";
 
 import { tabStyle, tabsStyle } from ".././types";
 
 export const MobileTabs: React.FC = () => {
+  const volume = useSelector((state: RootState) => state.settings.soundsVolume);
+
+  const [changePageSound] = useSound(sounds.changePage, { volume });
   const tabHomeIcon = <HouseIcon fontSize="large" />;
   const tabLoginIcon = <ExitToAppIcon fontSize="large" />;
   const tabRegIcon = <AppRegistrationIcon fontSize="large" />;
@@ -34,8 +40,6 @@ export const MobileTabs: React.FC = () => {
     }
   }, [pagePath]);
 
-  console.log(pagePath, "pagePath");
-
   const handleChange = (
     event: React.SyntheticEvent,
     newValue: number
@@ -44,6 +48,7 @@ export const MobileTabs: React.FC = () => {
     setConfirmPath(path);
     navigate(path);
     setValue(newValue);
+    changePageSound();
   };
   return (
     <Box sx={{ width: "100%" }}>
