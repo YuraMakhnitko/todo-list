@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import useSound from "use-sound";
 import { sounds } from "../settings/sounds";
 import { homeContentText } from "./languageSettings";
+import type { Todo } from "../settings/types";
 
 import {
   OneTodo,
@@ -11,20 +12,52 @@ import {
   TodosCompletedHomeMessages,
 } from "../components/index";
 
-import type { Todo } from "../settings/types";
-import type { RootState } from "../redux/store";
-import { comleteOneTodo } from "../redux/lists/slice";
+import {
+  AppDispatch,
+  RootState,
+  comleteOneTodo,
+  fetchTodos,
+  setActiveTodos,
+  setCompletedTodos,
+  fetchUpdateTodo,
+} from "../redux";
 
 export const Home: React.FC = (): JSX.Element => {
+  const dispatch = useDispatch() as AppDispatch;
+
   const volume = useSelector((state: RootState) => state.settings.soundsVolume);
   const [unCompletedTodoPlay] = useSound(sounds.unComplete, { volume });
   const [completedTodoPlay] = useSound(sounds.comlete, { volume });
 
-  const dispatch = useDispatch();
-
   const { todosList, todosListCompleted } = useSelector(
     (state: RootState) => state.listsTodos
   );
+  const { isAuth, user } = useSelector((state: RootState) => state.auth);
+
+  useEffect(() => {
+    const fetchDataTodos = async () => {
+      const fetchActive = {
+        completed: false,
+        user: user._id,
+      };
+      const fetchCompleted = {
+        completed: true,
+        user: user._id,
+      };
+
+      const dataActive = (await dispatch(fetchTodos(fetchActive)))
+        .payload as Todo[];
+
+      const dataCompleted = (await dispatch(fetchTodos(fetchCompleted)))
+        .payload as Todo[];
+
+      dispatch(setActiveTodos(dataActive));
+      dispatch(setCompletedTodos(dataCompleted));
+    };
+    if (isAuth) {
+      fetchDataTodos();
+    }
+  }, [isAuth]);
 
   const [transferTodo, setTransferTodo] = useState<Todo>();
   const { language } = useSelector((state: RootState) => state.settings);
@@ -42,13 +75,21 @@ export const Home: React.FC = (): JSX.Element => {
   ) => {
     const dataString = JSON.stringify(data);
     event.dataTransfer.setData("text", dataString);
-
     setTransferTodo(data);
   };
 
   const dropHandler = (event: React.DragEvent<HTMLDivElement>): void => {
     event.preventDefault();
     const data = JSON.parse(event.dataTransfer.getData("text")) as Todo;
+
+    if (isAuth) {
+      const params = {
+        _id: data._id,
+        completed: data.completed,
+      };
+      dispatch(fetchUpdateTodo(params));
+    }
+
     data.completed = !data.completed;
     dispatch(comleteOneTodo(data));
     data.completed ? completedTodoPlay() : unCompletedTodoPlay();

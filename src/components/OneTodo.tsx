@@ -3,37 +3,49 @@ import useSound from "use-sound";
 import { sounds } from "../settings/sounds";
 
 import { MdLibraryAddCheck, MdOutlineLibraryAddCheck } from "react-icons/md";
-import { useDispatch } from "react-redux";
-import { removeTodo, comleteOneTodo } from "../redux/lists/slice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  removeTodo,
+  comleteOneTodo,
+  RootState,
+  fetchUpdateTodo,
+  fetchRemoveTodo,
+  AppDispatch,
+} from "../redux";
 
 import type { Todo } from "../settings/types";
-import { RootState } from "../redux/store";
+
 import { ModalConfirm } from "./ModalConfirm";
 
 export const OneTodo: React.FC<Todo> = ({
   todoText,
   completed,
   index,
+  _id,
   onDragStart,
 }: Todo): JSX.Element => {
   const data = {
     index,
     completed,
+    _id,
   } as Todo;
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch() as AppDispatch;
   const todoStyleAppear: string = "todo__item";
   const todoStyleRemove: string = "todo__item-remove";
   const [todoAnim, setTodoAnim] = useState<boolean>(false);
 
   const volume = useSelector((state: RootState) => state.settings.soundsVolume);
+  const { isAuth } = useSelector((state: RootState) => state.auth);
 
   const [completedTodoPlay] = useSound(sounds.comlete, { volume });
   const [unCompletedTodoPlay] = useSound(sounds.unComplete, { volume });
   const [removeTodoSound] = useSound(sounds.remove, { volume });
 
   const removeTodoHandler = (): void => {
+    if (isAuth) {
+      dispatch(fetchRemoveTodo(data._id));
+    }
     removeTodoSound();
     setTodoAnim(!todoAnim);
     setTimeout(() => {
@@ -42,6 +54,14 @@ export const OneTodo: React.FC<Todo> = ({
   };
 
   const completeTodoHandler = (): void => {
+    if (isAuth) {
+      const params = {
+        _id: data._id,
+        completed: data.completed,
+      };
+
+      dispatch(fetchUpdateTodo(params));
+    }
     data.completed = !data.completed;
     dispatch(comleteOneTodo(data));
     data.completed ? completedTodoPlay() : unCompletedTodoPlay();

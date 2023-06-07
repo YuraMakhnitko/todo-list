@@ -1,7 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
-
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
@@ -44,7 +43,7 @@ const ConfirmationDialogRaw = (props: ConfirmationDialogRawProps) => {
       open={open}
       {...other}
     >
-      <DialogTitle sx={{ color: "#61dafb;" }}>Delete this TODO?</DialogTitle>
+      <DialogTitle sx={{ color: "#fff;" }}>Delete this TODO?</DialogTitle>
 
       <DialogActions>
         <button autoFocus className="todo__button" onClick={handleCancel}>

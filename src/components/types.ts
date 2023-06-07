@@ -22,6 +22,13 @@ export const tabStyle = {
     color: "#fff",
   },
 };
+// export const tabStyleHidden = {
+//   maxWidth: "0px",
+//   opacity: 0,
+//   padding: "0px",
+//   margin: "0px",
+//   border: "unset",
+// };
 
 export const tabsStyle = {
   "& .css-1aquho2-MuiTabs-indicator": {

@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { Todo } from "../../settings/types";
-
-interface ListsTodosState {
-  todosList: Todo[];
-  todosListCompleted: Todo[];
-}
+import { ListsTodosState } from "./types";
+import { fetchAddTodo, fetchTodos } from "./asyncActions";
+import { Status } from "../auth/types";
 
 const initialState: ListsTodosState = {
+  fetchedTodos: [],
   todosList: [],
   todosListCompleted: [],
+  status: Status.LOADING,
 };
 
 export const listsTodosSlice = createSlice({
@@ -61,8 +61,52 @@ export const listsTodosSlice = createSlice({
         }
       }
     },
+    setActiveTodos(state, action: PayloadAction<Todo[]>) {
+      state.todosList = action.payload;
+    },
+    setCompletedTodos(state, action: PayloadAction<Todo[]>) {
+      state.todosListCompleted = action.payload;
+    },
+  },
+  extraReducers: (builder) => {
+    // ADD ONE TODO
+    builder.addCase(fetchAddTodo.pending, (state) => {
+      state.status = Status.LOADING;
+    });
+    builder.addCase(
+      fetchAddTodo.fulfilled,
+      (state, action: PayloadAction<Todo>) => {
+        state.fetchedTodos = [action.payload, ...state.fetchedTodos];
+        state.status = Status.SUCCSESS;
+      }
+    );
+    builder.addCase(fetchAddTodo.rejected, (state) => {
+      state.status = Status.ERROR;
+    });
+    // fetch todos
+    builder.addCase(fetchTodos.pending, (state) => {
+      state.status = Status.LOADING;
+      state.fetchedTodos = [];
+    });
+    builder.addCase(
+      fetchTodos.fulfilled,
+      (state, action: PayloadAction<Todo[]>) => {
+        state.status = Status.SUCCSESS;
+        state.fetchedTodos = action.payload;
+      }
+    );
+    builder.addCase(fetchTodos.rejected, (state) => {
+      state.status = Status.ERROR;
+      state.fetchedTodos = [];
+    });
   },
 });
 
-export const { addTodo, removeTodo, comleteOneTodo } = listsTodosSlice.actions;
+export const {
+  addTodo,
+  removeTodo,
+  comleteOneTodo,
+  setActiveTodos,
+  setCompletedTodos,
+} = listsTodosSlice.actions;
 export default listsTodosSlice.reducer;

@@ -1,57 +1,46 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import { RootState } from "../../redux/store";
+import { type RootState, setTabIndex } from "../../redux";
 import { settingsContentText } from "../../pages/languageSettings";
 
 import { tabStyle, tabsStyle, TabsProps } from "../types";
 import useSound from "use-sound";
 import { sounds } from "../../settings/sounds";
+import { AppDispatch } from "../../redux/store";
 
 export const DesctopTabs: React.FC = () => {
+  const dispatch = useDispatch() as AppDispatch;
   const volume = useSelector((state: RootState) => state.settings.soundsVolume);
+  const { isAuth } = useSelector((state: RootState) => state.auth);
+  const { language } = useSelector((state: RootState) => state.settings);
+  const { tabIndex } = useSelector((state: RootState) => state.tabs);
 
   const [changePageSound] = useSound(sounds.changePage, { volume });
-
-  const pagePath = window.location.pathname;
   const navigate = useNavigate();
 
-  const { isAuth } = useSelector((state: RootState) => state.auth);
-
-  const { language } = useSelector((state: RootState) => state.settings);
-  const [value, setValue] = useState<number>(0);
-  const [confirmPath, setConfirmPath] = useState<string>("/");
   const [changedLanguage, setChangedLanguage] = useState<TabsProps>(
     settingsContentText.en
   );
-
   const { home, login, register, settings } = changedLanguage;
-
-  useEffect(() => {
-    if (pagePath !== confirmPath) {
-      setValue(0);
-    }
-  }, [pagePath]);
 
   useEffect(() => {
     if (language === "en" || language === "ua") {
       setChangedLanguage(settingsContentText[language]);
     }
-  }, [language, value]);
-
-  console.log(pagePath, "pagePath");
+  }, [language, tabIndex]);
 
   const handleChange = (
     event: React.SyntheticEvent,
     newValue: number
   ): void => {
     const path = event.currentTarget.id;
-    setConfirmPath(path);
+
     navigate(path);
-    setValue(newValue);
+    dispatch(setTabIndex(newValue));
     changePageSound();
   };
 
@@ -59,7 +48,7 @@ export const DesctopTabs: React.FC = () => {
     <Box sx={{ width: "100%" }}>
       <Box sx={{ bgcolor: "transparent" }}>
         <Tabs
-          value={value}
+          value={tabIndex}
           onChange={handleChange}
           aria-label="tabs"
           centered

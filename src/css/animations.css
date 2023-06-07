@@ -1,39 +1,32 @@
 @keyframes item {
   from {
-    /* transform: scale(0.01); */
     transform: translate(-200%, 0);
   }
   to {
-    /* transform: scale(1); */
     transform: translate(0%, 0);
   }
 }
 
 @keyframes item-fade {
   from {
-    /* transform: scale(1); */
     transform: translate(0%, 0);
   }
   to {
-    /* transform: scale(0.01); */
     transform: translate(-200%, 0);
   }
 }
 
 @keyframes item-remove {
   from {
-    /* transform: scale(1); */
     transform: scale(1);
   }
   to {
     transform: scale(0.01);
-    /* transform: translate(200%, 0); */
   }
 }
 
 .anim-title__box {
   display: flex;
-  /* animation: title-letters 3s ease-in; */
 }
 
 .anim-title__letter {
@@ -42,8 +35,6 @@
   text-transform: uppercase;
   opacity: 0;
   margin-bottom: 10px;
-  /* animation: title-letters 3s ease; */
-  /* animation-delay: 30s; */
 }
 
 @keyframes title-letters {

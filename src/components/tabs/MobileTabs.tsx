@@ -1,60 +1,46 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-
-import HouseIcon from "@mui/icons-material/House";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
-import SettingsIcon from "@mui/icons-material/Settings";
-
 import useSound from "use-sound";
 import { sounds } from "../../settings/sounds";
-
-import { RootState } from "../../redux/store";
-
+import { RootState, setTabIndex } from "../../redux";
 import { tabStyle, tabsStyle } from ".././types";
+import { AppDispatch } from "../../redux/store";
+import {
+  tabHomeIcon,
+  tabLoginIcon,
+  tabRegIcon,
+  tabSettingsIcon,
+} from "./index";
 
 export const MobileTabs: React.FC = () => {
+  const dispatch = useDispatch() as AppDispatch;
   const volume = useSelector((state: RootState) => state.settings.soundsVolume);
 
   const [changePageSound] = useSound(sounds.changePage, { volume });
-  const tabHomeIcon = <HouseIcon fontSize="large" />;
-  const tabLoginIcon = <ExitToAppIcon fontSize="large" />;
-  const tabRegIcon = <AppRegistrationIcon fontSize="large" />;
-  const tabSettingsIcon = <SettingsIcon fontSize="large" />;
 
-  const pagePath = window.location.pathname;
   const navigate = useNavigate();
 
   const { isAuth } = useSelector((state: RootState) => state.auth);
-
-  const [value, setValue] = React.useState<number>(0);
-  const [confirmPath, setConfirmPath] = useState<string>("/");
-
-  useEffect(() => {
-    if (pagePath !== confirmPath) {
-      setValue(0);
-    }
-  }, [pagePath]);
+  const { tabIndex } = useSelector((state: RootState) => state.tabs);
 
   const handleChange = (
     event: React.SyntheticEvent,
     newValue: number
   ): void => {
     const path = event.currentTarget.id;
-    setConfirmPath(path);
     navigate(path);
-    setValue(newValue);
+    dispatch(setTabIndex(newValue));
     changePageSound();
   };
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ bgcolor: "transparent" }}>
         <Tabs
-          value={value}
+          value={tabIndex}
           onChange={handleChange}
           aria-label="tabs"
           centered

@@ -28,42 +28,11 @@
   animation: backTodo 5s ease;
   animation-iteration-count: infinite;
 }
-@keyframes backTodo {
-  from {
-    /* background-position: 50% 0%; */
-    /* background: #175d70; */
-    /* background: radial-gradient(
-      circle,
-      rgba(15, 32, 120, 1) 0%,
-      rgba(33, 1, 8, 1) 100%
-    ); */
-  }
-  50% {
-    /* background: #021b22; */
-
-    /* background: radial-gradient(
-      circle,
-      rgba(15, 32, 120, 1) 50%,
-      rgba(33, 1, 8, 1) 100%
-    ); */
-  }
-  to {
-    /* background-position: 50% 100%; */
-    /* background: #175d70; */
-
-    /* background: radial-gradient(
-      circle,
-      rgba(15, 32, 120, 1) 0%,
-      rgba(33, 1, 8, 1) 100%
-    ); */
-  }
-}
 
 .todo__title {
   color: #61dafb;
   text-transform: uppercase;
   animation: title 0.4s ease-in;
-  /* transform: scale(0.1); */
 }
 @keyframes title {
   from {
@@ -95,12 +64,10 @@
 }
 @keyframes sub-title {
   from {
-    /* transform: translate(-200%, 0%); */
     opacity: 0;
   }
   to {
     opacity: 1;
-    /* transform: translate(0%, 0%); */
   }
 }
 
@@ -122,9 +89,6 @@
   transition: 0.3s ease 0s;
   animation: item 0.3s ease;
 }
-/* .todo__item:hover {
-  transform: translate(1px, -1px);
-} */
 
 .todo__item-fade {
   display: flex;

@@ -1,7 +1,5 @@
 import React from "react";
-
 import { useScreenSize } from "../hooks/useScreenSize";
-
 import { DesctopTabs } from "./tabs/DesctopTabs";
 import { MobileTabs } from "./tabs/MobileTabs";
 

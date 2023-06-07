@@ -7,9 +7,7 @@ import VolumeDown from "@mui/icons-material/VolumeDown";
 import VolumeUp from "@mui/icons-material/VolumeUp";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setVolume } from "../redux/settings/slice";
-import { RootState } from "../redux/store";
-import { Language } from "../redux/types";
+import { setVolume, Language, RootState } from "../redux";
 
 export const VolumeSlider: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -27,9 +25,7 @@ export const VolumeSlider: React.FC = (): JSX.Element => {
   };
   return (
     <div className="todo-settings__sounds-box">
-      <label htmlFor="" className="todo-settings__label">
-        {soundsTitle}
-      </label>
+      <p className="todo-settings__label">{soundsTitle}</p>
       <Box sx={{ width: "100%" }}>
         <Stack
           spacing={2}
